@@ -1,0 +1,21 @@
+{
+  "name": "antar/sms-send-tele2",
+  "description": "Module for SMS send using Tele2 API",
+  "keywords": ["module", "extension", "tele2", "sms"],
+  "authors": [
+    {
+      "name": "Andrey Tarasov",
+      "email": "tarasov.krk@gmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Antar\\SmsSendTele2\\": ""
+    }
+  },
+  "require": {
+    "php": ">=7.0",
+    "ext-curl": "*",
+    "ext-mbstring": "*"
+  }
+}
