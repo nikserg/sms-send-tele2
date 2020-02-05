@@ -12,46 +12,26 @@ class Tele2SmsSender
     /**
      *  API URL
      */
-    const SERVICE_URL = "https://newbsms.tele2.ru/api/";
+    const SERVICE_URL = "http://pbx.itcomgk.ru/smsworker.php"; //http://pbx.itcomgk.ru/smsworker.php?source=crm&to=79XXXXXXXXX&text=ТЕКСТДЛЯОТПРАКИ
 
-    /**
-     * @var string
-     */
-    private $login;
-    /**
-     * @var string
-     */
-    private $password;
-    /**
-     * @var string
-     */
-    private $shortCode;
-    /**
-     * @var string
-     */
-    private $requestUrl;
     /**
      * @var
      */
     private $error;
 
     /**
+     * @var string
+     */
+    private $source;
+
+    /**
      * Tele2SmsSender constructor.
      *
-     * @param        $login
-     * @param        $password
-     * @param string $shortCode
+     * @param string $source
      */
-    public function __construct($login, $password, $shortCode = "Sms Sender")
+    public function __construct($source = 'crm')
     {
-        $this->login = trim($login);
-        $this->password = trim($password);
-        $this->shortCode = trim($shortCode);
-
-        $this->requestUrl = self::SERVICE_URL . "?" .
-            "login={$this->login}&" .
-            "password={$this->password}&" .
-            "shortcode={$this->shortCode}&";
+        $this->source = $source;
     }
 
     /**
@@ -62,30 +42,13 @@ class Tele2SmsSender
      */
     public function send($phone, $message)
     {
-        $this->requestUrl .= "operation=send&msisdn=" . trim($phone) . "&text=" . urlencode(trim($message));
+        $requestUrl = self::SERVICE_URL. "?source=".$this->source."&to=" . trim($phone) . "&text=" . urlencode(trim($message));
 
-        return $this->request();
-    }
-
-    /**
-     * @return mixed
-     */
-    public function error()
-    {
-        return $this->error;
-    }
-
-    /**
-     * @return bool|string
-     * @throws \Exception
-     */
-    protected function request()
-    {
         if (!$curl = curl_init()) {
             throw new \Exception(500, 'Unable to initialize CURL');
         }
 
-        curl_setopt($curl, CURLOPT_URL, $this->requestUrl);
+        curl_setopt($curl, CURLOPT_URL, $requestUrl);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_USERAGENT,
             'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.103 Safari/537.36');
@@ -101,4 +64,13 @@ class Tele2SmsSender
 
         return false;
     }
+
+    /**
+     * @return mixed
+     */
+    public function error()
+    {
+        return $this->error;
+    }
+
 }
