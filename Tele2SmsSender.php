@@ -1,6 +1,6 @@
 <?php
 
-namespace Antar\SmsSendTele2;
+namespace nikserg\SmsSendTele2;
 
 /**
  * Class Tele2SmsSender
