@@ -12,7 +12,7 @@ class Tele2SmsSender
     /**
      *  API URL
      */
-    const SERVICE_URL = "http://pbx.itcomgk.ru/smsworker.php"; //http://pbx.itcomgk.ru/smsworker.php?source=crm&to=79XXXXXXXXX&text=ТЕКСТДЛЯОТПРАКИ
+    const SERVICE_URL = "http://kannel.itcomgk.ru/smsworker.php"; //http://kannel.itcomgk.ru/smsworker.php?source=crm&to=79XXXXXXXXX&text=ТЕКСТДЛЯОТПРАКИ
 
     /**
      * @var
